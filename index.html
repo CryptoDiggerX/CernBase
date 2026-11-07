@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CERN Base – NFT Mint</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f4f6ff;--card:#fff;--text:#0f1535;--muted:#5b6385;--line:#dfe3f5;--a:#2f5bff;--b:#8a3ffc;--ok:#0a9d6b}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070a1c;--card:#10152e;--text:#eef0ff;--muted:#9aa3cc;--line:#232a52;--ok:#34d399}}
+:root[data-theme="dark"]{--bg:#070a1c;--card:#10152e;--text:#eef0ff;--muted:#9aa3cc;--line:#232a52;--ok:#34d399}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden;line-height:1.5}
+.glow{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(500px 400px at var(--x,30%) var(--y,10%),rgba(47,91,255,.28),transparent 70%),radial-gradient(500px 400px at 85% 80%,rgba(138,63,252,.25),transparent 70%)}
+main{position:relative;z-index:1;max-width:960px;margin:0 auto;padding:20px 16px 48px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-weight:800;font-size:20px;letter-spacing:.5px}
+.logo span{background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+button{font:inherit;cursor:pointer}
+.pill{border:1px solid var(--line);background:var(--card);color:var(--text);padding:9px 14px;border-radius:999px;font-weight:600;font-size:14px}
+.hero{display:grid;grid-template-columns:1fr;gap:24px;margin-top:28px;align-items:center}
+@media(min-width:800px){.hero{grid-template-columns:1.1fr .9fr}}
+.badge{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:var(--muted);border:1px solid var(--line);padding:5px 12px;border-radius:999px;background:var(--card)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.3;transform:scale(1.5)}}
+h1{font-size:clamp(34px,7vw,56px);line-height:1.05;margin:14px 0 10px}
+h1 em{font-style:normal;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--muted);font-size:17px;margin:0}
+.token{margin-top:18px;padding:14px 16px;border-radius:16px;border:1px solid var(--line);background:var(--card);display:flex;align-items:center;gap:12px}
+.token b{font-size:22px;background:linear-gradient(90deg,var(--a),var(--b));-webkit-background-clip:text;background-clip:text;color:transparent}
+.art{position:relative;aspect-ratio:1;max-width:380px;width:100%;margin:0 auto;border-radius:28px;background:linear-gradient(135deg,var(--a),var(--b));display:grid;place-items:center;overflow:hidden;box-shadow:0 20px 60px rgba(70,60,255,.35);animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-12px) rotate(1deg)}}
+.art svg{width:70%;height:70%;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.art .tag{position:absolute;bottom:14px;left:14px;right:14px;background:rgba(0,0,0,.35);color:#fff;border-radius:14px;padding:8px 12px;font-size:13px;display:flex;justify-content:space-between;backdrop-filter:blur(6px)}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+@media(min-width:700px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat small{color:var(--muted);display:block}
+.stat strong{font-size:20px}
+.grid2{display:grid;grid-template-columns:1fr;gap:16px;margin-top:24px}
+@media(min-width:800px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px}
+.card h2{margin:0 0 12px;font-size:20px}
+.util{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.util li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--bg);border:1px solid var(--line);transition:transform .2s}
+.util li:hover{transform:translateX(4px)}
+.util i{font-style:normal}
+.row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--line);font-size:15px}
+.row:last-of-type{border:0}
+.qty{display:flex;align-items:center;justify-content:center;gap:16px;margin:16px 0}
+.qty button{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:22px}
+.qty output{font-size:32px;font-weight:800;min-width:40px;text-align:center}
+.bar{height:10px;border-radius:99px;background:var(--bg);border:1px solid var(--line);overflow:hidden;margin:8px 0 4px}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,var(--a),var(--b));transition:width .8s}
+.mint{width:100%;border:0;border-radius:16px;padding:16px;font-size:17px;font-weight:700;color:#fff;background:linear-gradient(90deg,var(--a),var(--b));box-shadow:0 10px 30px rgba(70,60,255,.35);transition:transform .15s}
+.mint:hover{transform:translateY(-2px)}
+.mint:disabled{opacity:.6;cursor:wait}
+#msg{min-height:22px;margin-top:12px;font-size:14px;text-align:center;color:var(--muted);word-break:break-word}
+.ok{color:var(--ok)!important}.err{color:#e5484d!important}
+footer{text-align:center;color:var(--muted);font-size:13px;margin-top:28px}
+</style>
+</head>
+<body>
+<div class="glow" id="glow"></div>
+<main>
+<nav>
+  <div class="logo"><span>CERN</span> Base</div>
+  <button class="pill" id="connect">Connect Wallet</button>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="badge"><i class="dot"></i> Mint is live on Base</span>
+    <h1>Join the <em>CERN Base</em> era.<br>Unlock 7,880 $CER.</h1>
+    <p class="lead">A limited collection of 4,789 NFTs on Base. Every NFT carries its own $CER token allocation.</p>
+    <div class="token"><b>1 NFT = 7,880 $CER</b><span style="color:var(--muted);font-size:14px">Token supply: 100M</span></div>
+  </div>
+  <div class="art">
+    <svg viewBox="0 0 100 100" fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><polygon points="50,6 90,28 90,72 50,94 10,72 10,28" fill="rgba(255,255,255,.12)"/><polygon points="50,24 74,38 74,62 50,76 26,62 26,38" fill="rgba(255,255,255,.2)"/><circle cx="50" cy="50" r="7" fill="#fff" stroke="none"/></svg>
+    <div class="tag"><span>CERN Base</span><span>7,880 $CER</span></div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><small>NFT Supply</small><strong data-n="4789">0</strong></div>
+  <div class="stat"><small>Token Supply</small><strong>100M $CER</strong></div>
+  <div class="stat"><small>Mint Fee</small><strong>0.0001 ETH</strong></div>
+  <div class="stat"><small>Max per mint</small><strong data-n="5">0</strong></div>
+</section>
+
+<section class="grid2">
+  <div class="card">
+    <h2>NFT Utility</h2>
+    <ul class="util">
+      <li><i>🪙</i><span><b>7,880 $CER per NFT</b><br><small style="color:var(--muted)">Each NFT you hold is tied to 7,880 $CER tokens.</small></span></li>
+      <li><i>🧩</i><span><b>Token allocation access</b><br><small style="color:var(--muted)">Your NFT count determines how much $CER you are eligible for.</small></span></li>
+      <li><i>🎁</i><span><b>Holder rewards</b><br><small style="color:var(--muted)">Priority for future drops, airdrops and community perks.</small></span></li>
+      <li><i>🗳️</i><span><b>Community membership</b><br><small style="color:var(--muted)">Be part of the CER ecosystem on Base.</small></span></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>Mint</h2>
+    <div class="row"><span>Price per NFT</span><b>0.0001 ETH</b></div>
+    <div class="row"><span>Network</span><b>Base</b></div>
+    <div class="row"><span>$CER you get</span><b id="cer">7,880</b></div>
+    <div class="qty"><button id="minus" aria-label="Less">−</button><output id="q">1</output><button id="plus" aria-label="More">+</button></div>
+    <div class="row"><span>Total</span><b id="total">0.0001 ETH</b></div>
+    <div class="bar"><div id="fill"></div></div>
+    <small style="color:var(--muted)" id="sold"></small>
+    <button class="mint" id="mint" style="margin-top:14px">Mint Now</button>
+    <div id="msg"></div>
+  </div>
+</section>
+<footer>CERN Base · Base Network · Max 5 NFTs per mint</footer>
+</main>
+
+<script>
+(function(){
+  var FEE_WALLET="0x580Aab97021D7D379c8d26444eAae332C3014ba7";
+  var PRICE_WEI=100000000000000n; // 0.0001 ETH
+  var MAX=5,SUPPLY=4789,PER=7880,BASE="0x2105";
+  var qty=1,account=null,minted=1847;
+  var $=function(i){return document.getElementById(i)};
+  
+
+  document.addEventListener("pointermove",function(e){
+    $("glow").style.setProperty("--x",(e.clientX/innerWidth*100)+"%");
+    $("glow").style.setProperty("--y",(e.clientY/innerHeight*100)+"%");
+  });
+
+  document.querySelectorAll("[data-n]").forEach(function(el){
+    var t=+el.dataset.n,s=performance.now();
+    (function f(n){var p=Math.min((n-s)/1200,1);el.textContent=Math.round(t*p).toLocaleString();if(p<1)requestAnimationFrame(f)})(s);
+  });
+
+  function render(){
+    $("q").textContent=qty;
+    $("cer").textContent=(qty*PER).toLocaleString();
+    $("total").textContent=(qty*0.0001).toFixed(4)+" ETH";
+    $("fill").style.width=Math.max(1,minted/SUPPLY*100)+"%";
+    $("sold").textContent=minted.toLocaleString()+" / "+SUPPLY.toLocaleString()+" minted";
+  }
+  function say(t,c){var m=$("msg");m.textContent=t;m.className=c||""}
+  $("plus").onclick=function(){if(qty<MAX){qty++;render()}else say("Max "+MAX+" NFTs per mint.","err")};
+  $("minus").onclick=function(){if(qty>1){qty--;render()}};
+
+  async function connect(){
+    if(!window.ethereum){say("No wallet found. Install MetaMask or open in a wallet browser.","err");return false}
+    try{
+      var a=await ethereum.request({method:"eth_requestAccounts"});
+      account=a[0];
+      $("connect").textContent=account.slice(0,6)+"…"+account.slice(-4);
+      try{await ethereum.request({method:"wallet_switchEthereumChain",params:[{chainId:BASE}]})}
+      catch(e){
+        if(e.code===4902){await ethereum.request({method:"wallet_addEthereumChain",params:[{chainId:BASE,chainName:"Base",nativeCurrency:{name:"Ether",symbol:"ETH",decimals:18},rpcUrls:["https://mainnet.base.org"],blockExplorerUrls:["https://basescan.org"]}]})}
+        else throw e;
+      }
+      say("Wallet connected on Base.","ok");return true;
+    }catch(e){say(e.message||"Connection rejected.","err");return false}
+  }
+  $("connect").onclick=connect;
+
+  $("mint").onclick=async function(){
+    if(!account&&!(await connect()))return;
+    var btn=$("mint");btn.disabled=true;say("Confirm the transaction in your wallet…");
+    try{
+      var value="0x"+(PRICE_WEI*BigInt(qty)).toString(16);
+      var hash=await ethereum.request({method:"eth_sendTransaction",params:[{from:account,to:FEE_WALLET,value:value}]});
+      minted=Math.min(SUPPLY,minted+qty);
+      
+      render();
+      say("Mint submitted! Tx: "+hash.slice(0,10)+"…"+hash.slice(-6)+" · "+(qty*PER).toLocaleString()+" $CER allocated.","ok");
+    }catch(e){say(e.code===4001?"Transaction cancelled.":(e.message||"Transaction failed."),"err")}
+    btn.disabled=false;
+  };
+  render();
+})();
+</script>
+</body>
+  </html>
